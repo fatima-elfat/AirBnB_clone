@@ -6,7 +6,12 @@
 
 ## Description
 ---
+
+A command interpreter to manipulate data without a visual interface, like in a Shell (perfect for development and debugging)
+
+
 This is a console application that simulates the AirBnB Clone (AirBnB Clone is a popular online booking agency for renting homes in any locale)
+
 
 This is the first step towards building your first full web application: the AirBnB clone. This first step is very important because you will use what you build during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
 
