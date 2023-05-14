@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
 
@@ -14,7 +15,6 @@ class BaseModel:
         self.id = str(uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
-
 
     def __str__(self):
         """
@@ -34,7 +34,7 @@ class BaseModel:
         of the instance
         """
         diction = {
-            "__class__" : self.__class.__name__,
+            "__class__": self.__class.__name__,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         }
