@@ -6,9 +6,14 @@ class BaseModel:
     """
     Defines all common attributes/methods for other classes
     """
-    id = str(uuid4())
-    created_at = datetime.now()
-    updated_at = datetime.now()
+
+    def __init__(self):
+        """
+        Initializes a new BaseModel
+        """
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
 
     def __str__(self):
