@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+"#!/usr/bin/python3"
 from uuid import uuid4
 from datetime import datetime
 
@@ -20,7 +20,7 @@ class BaseModel:
         """
         Returns a string representation of the class
         """
-        return f"{self.__class__.__name__} {self.id} {str(self.__dict__)}"
+        return f"{[self.__class__.__name__]} ({self.id}) {str(self.__dict__)}"
 
     def save(self):
         """ Updates the public instance attribute
@@ -38,3 +38,7 @@ class BaseModel:
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         }
+
+        dict_copy = self.__dict__.copy()
+        dict_copy.update(diction)
+        return dict_copy
