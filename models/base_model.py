@@ -39,7 +39,7 @@ class BaseModel:
         of the instance
         """
         diction = {
-            "__class__": self.__class.__name__,
+            "__class__": self.__class__.__name__,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat()
         }
