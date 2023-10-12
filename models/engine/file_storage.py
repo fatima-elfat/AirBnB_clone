@@ -7,7 +7,8 @@ and deserializes JSON file to instances:
 
 import json
 import os
-
+import models
+from models.base_model import BaseModel
 
 class FileStorage():
     """Serializes instances to a JSON file
@@ -22,18 +23,24 @@ class FileStorage():
     
     def new(self, obj):
         """Populates __objects with <obj class name>.obj as key"""
-        self.__objects[obj.__class__.__name__+ '.' + obj.id] = obj
+        object_value = obj.__class__.__name__+ '.' + obj.id
+        self.__objects[object_value] = obj
 
     def save(self):
         """Serializes __objects to the JSON file"""
         with open(self.__file_path, 'w') as file:
-            json.dump(self.__objects, file)
+            temp_dict = {}
+            for k,v in self.__objects.items():   
+                temp_dict[k] = v.to_dict()
+            json.dump(temp_dict, file)
     
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            if os.path.isfile(self.__file_path):
-                with open(self.__file_path) as file:
-                    self.__objects = json.load(file)
+            with open(self.__file_path, mode='r', encoding="UTF-8") as myfile:
+                from_json = json.load(myfile)      # saves dic in variable
+                for key, value in from_json.items():   # iterates through key and value of dictionary
+                    attr_cls_name = value.pop("__class__")  # removes from the dict,the value of __class__, 'BaseModel' and assigns it to attr_cls_name
+                    self.new(eval(attr_cls_name)(**value))  # self.new(BaseModel(**value)). Recreates the BaseModel object and passes it to new()
         except:
             pass
