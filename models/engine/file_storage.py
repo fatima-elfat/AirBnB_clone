@@ -9,6 +9,7 @@ import json
 import os
 import models
 from models.base_model import BaseModel
+from models.user import User
 
 class FileStorage():
     """Serializes instances to a JSON file
@@ -36,6 +37,7 @@ class FileStorage():
     
     def reload(self):
         """Deserializes the JSON file to __objects"""
+        from_json = {}
         try:
             with open(self.__file_path, mode='r', encoding="UTF-8") as myfile:
                 from_json = json.load(myfile)      # saves dic in variable

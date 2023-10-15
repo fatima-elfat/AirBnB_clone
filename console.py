@@ -7,11 +7,14 @@ from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
 import shlex
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
     prompt = "(hbnb) "
-    __classes = ["BaseModel"] # list of existing classes
+    __classes = ["BaseModel", "User",
+              "State", "City",
+              "Amenity", "Place", "Review"] # list of existing classes
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
