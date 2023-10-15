@@ -5,11 +5,12 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
-
+from datetime import datetime
+import shlex
 
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     __classes = ["BaseModel"] # list of existing classes
 
     def do_create(self, arg):
@@ -32,20 +33,20 @@ class HBNBCommand(cmd.Cmd):
             list_args = arg.split()
             if list_args[0]:
                 if list_args[0] in HBNBCommand.__classes:
-                    if list_args[1]:
+                    if len(list_args) >= 2:
                         class_id = f"{list_args[0]}.{list_args[1]}"
                         if class_id in objects:
                             print(objects[class_id])
                         else: 
-                            print("no instance found")
+                            print("** no instance found **")
                     else:
-                        print("instance id missing")
+                        print("** instance id missing **")
                 else:
-                    print("class doesn't exist")
+                    print("** class doesn't exist **")
             else:
-                print("class name missing")
+                print("** class name missing **")
         else:
-            print("class name missing")
+            print("** class name missing **")
 
     def do_destroy(self, arg):
         """Deletes an instance from memory
@@ -61,15 +62,15 @@ class HBNBCommand(cmd.Cmd):
                             del objects[class_id]
                             storage.save()
                         else: 
-                            print("no instance found")
+                            print("** no instance found **")
                     else:
-                        print("instance id missing")
+                        print("** instance id missing **")
                 else:
-                    print("class doesn't exist")
+                    print("** class doesn't exist **")
             else:
-                print("class name missing")
+                print("** class name missing **")
         else:
-            print("class name missing")
+            print("** class name missing **")
 
     def do_all(self, arg):
         """
@@ -79,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
         objects = storage.all()
         if arg:
             list_args = arg.split()
-            if list_args[0] in HBNBCommand.__class:
+            if list_args[0] in HBNBCommand.__classes:
                 class_objs = [str(v) for k, v in objects.items()
                            if list_args[0] == k.split('.')[0]]
                 print(class_objs)
@@ -88,6 +89,39 @@ class HBNBCommand(cmd.Cmd):
         else:
             allObjs = [str(v) for k, v in objects.items()]
             print(allObjs)
+
+    def do_update(self, line):
+        """
+        Updates an instance based on the class name
+        and id by adding or updating attribute
+        """
+        the_dict = storage.all()
+        cmd, arg, _ = self.parseline(line)
+        l_arg = shlex.split(arg)
+        """print("{}".format(arg))"""
+        b = "{}.{}".format(cmd, l_arg[0])
+        a = the_dict.get(b)
+        if cmd is None:
+            print("** class name missing **")
+        elif cmd not in self.__classes:
+            print("** class doesn't exist **")
+        elif arg == "":
+            print("** instance id missing **")
+        if a:
+            if len(l_arg) < 2:
+                print("** attribute name missing **")
+            elif len(l_arg) < 3:
+                print("** value missing **")
+            else:
+                if l_arg[1] not in b.__class__.__dict__.keys():
+                    setattr(a, l_arg[1], l_arg[2].strip())
+                else:
+                    t = type(b.__class__.__dict__[l_arg[1]])
+                    setattr(a, l_arg[1], t(l_arg[2].strip()))
+                setattr(a, 'updated_at', datetime.now())
+                storage.save()
+        else:
+            print("** no instance found **")
 
     def do_quit(self, arg):
         """Exit the interpreter"""
