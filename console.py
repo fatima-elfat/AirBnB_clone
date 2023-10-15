@@ -5,7 +5,8 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
-
+from datetime import datetime
+import shlex
 
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
@@ -69,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("class name missing")
         else:
-            print("class name missing")
+            print("** class name missing **")
 
     def do_all(self, arg):
         """
@@ -88,6 +89,39 @@ class HBNBCommand(cmd.Cmd):
         else:
             allObjs = [str(v) for k, v in objects.items()]
             print(allObjs)
+
+    def do_update(self, line):
+        """
+        Updates an instance based on the class name
+        and id by adding or updating attribute
+        """
+        the_dict = storage.all()
+        cmd, arg, _ = self.parseline(line)
+        l_arg = shlex.split(arg)
+        """print("{}".format(arg))"""
+        b = "{}.{}".format(cmd, l_arg[0])
+        a = the_dict.get(b)
+        if cmd is None:
+            print("** class name missing **")
+        elif cmd not in self.__classes:
+            print("** class doesn't exist **")
+        elif arg == "":
+            print("** instance id missing **")
+        if a:
+            if len(l_arg) < 2:
+                print("** attribute name missing **")
+            elif len(l_arg) < 3:
+                print("** value missing **")
+            else:
+                if l_arg[1] not in b.__class__.__dict__.keys():
+                    setattr(a, l_arg[1], l_arg[2].strip())
+                else:
+                    t = type(b.__class__.__dict__[l_arg[1]])
+                    setattr(a, l_arg[1], t(l_arg[2].strip()))
+                setattr(a, 'updated_at', datetime.now())
+                storage.save()
+        else:
+            print("** no instance found **")
 
     def do_quit(self, arg):
         """Exit the interpreter"""
