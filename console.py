@@ -47,7 +47,30 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("class name missing")
 
-    
+    def do_destroy(self, arg):
+        """Deletes an instance from memory
+          by its class name and id"""
+        if arg:
+            objects = storage.all()
+            list_args = arg.split()
+            if list_args[0]:
+                if list_args[0] in HBNBCommand.__classes:
+                    if list_args[1]:
+                        class_id = f"{list_args[0]}.{list_args[1]}"
+                        if class_id in objects:
+                            del objects[class_id]
+                            storage.save()
+                        else: 
+                            print("no instance found")
+                    else:
+                        print("instance id missing")
+                else:
+                    print("class doesn't exist")
+            else:
+                print("class name missing")
+        else:
+            print("class name missing")
+
 
     def do_quit(self, arg):
         """Exit the interpreter"""
