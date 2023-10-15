@@ -18,14 +18,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
-        if arg:
+        if len(arg) > 0:
+            list_arg = arg.split()
             if arg in HBNBCommand.__classes:
-                print(BaseModel().id)
+                print(eval(list_arg[0])().id)
                 storage.save()
             else: # class name not in __classes
-                print("class doesn't exist")
+                print("** class doesn't exist **")
         else:
-            print("class name missing")
+            print("** class name missing **")
     
     def do_show(self, arg):
         """Prints the string representation of an
