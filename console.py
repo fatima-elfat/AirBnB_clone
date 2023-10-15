@@ -7,6 +7,7 @@ from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
 import shlex
+from models.user import User
 
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
