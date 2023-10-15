@@ -7,6 +7,7 @@ from models.base_model import BaseModel
 from models import storage
 from datetime import datetime
 import shlex
+import re
 from models.user import User
 from models.state import State
 from models.city import City
@@ -144,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
             splt_list = re.split(r'\.|\(|\)', line)
             if len(splt_list) < 2:
                 print("** Unknown syntax:", line)
-            elif splt_list[0] not in self.__clss:
+            elif splt_list[0] not in self.__classes:
                 print("** class doesn't exist **")
             else:
                 if splt_list[1] == 'show':
