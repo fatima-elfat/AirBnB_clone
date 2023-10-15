@@ -71,6 +71,23 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("class name missing")
 
+def do_all(self, arg):
+    """
+    Prints all string representation of all instances 
+    based on the class name
+    """
+    objects = storage.all()
+    if arg:
+        list_args = arg.split()
+        if list_args[0] in HBNBCommand.__class:
+            class_objs = [str(v) for k, v in objects.items()
+                       if list_args[0] == k.split('.')[0]]
+            print(class_objs)
+        else:
+            print("** class doesn't exist **")
+    else:
+        allObjs = [str(v) for k, v in objects.items()]
+        print(allObjs)
 
     def do_quit(self, arg):
         """Exit the interpreter"""
