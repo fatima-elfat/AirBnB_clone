@@ -8,6 +8,7 @@ from uuid import uuid4
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """
     Defines all common attributes/methods for other classes
@@ -23,8 +24,8 @@ class BaseModel:
             for k, v in kwargs.items():
                 # omitting '__class__' from deserialization
                 if k != '__class__':
-                    # Converting 'created_at' and 'updated_at' to datetime objects
-                    if k == 'created_at' or k =='updated_at':
+                    # Converting 'created_at', 'updated_at' to datetime objts
+                    if k == 'created_at' or k == 'updated_at':
                         v = datetime.fromisoformat(v)
                     setattr(self, k, v)
         else:
