@@ -136,6 +136,62 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** no instance found **")
 
+    def default(self, line):
+        """
+        default when preffix not recognized.
+        """
+        if '.' in line:
+            splt_list = re.split(r'\.|\(|\)', line)
+            if len(splt_list) < 2:
+                print("** Unknown syntax:", line)
+            elif splt_list[0] not in self.__clss:
+                print("** class doesn't exist **")
+            else:
+                if splt_list[1] == 'show':
+                    id_cls = splt_list[2][1:-1]
+                    self.do_show(splt_list[0] + ' ' + id_cls)
+                elif splt_list[1] == 'destroy':
+                    id_cls = splt_list[2][1:-1]
+                    self.do_destroy(splt_list[0] + ' ' + id_cls)
+                elif splt_list[1] == 'all':
+                    self.do_all(splt_list[0])
+                elif splt_list[1] == 'count':
+                    self.do_count(splt_list[0])
+                elif splt_list[1] == 'update':
+                    id_arg = splt_list[2].split(',', 1)
+                    if len(id_arg) < 2:
+                        print("** attribute not found **")
+                    if id_arg[1].strip()[0] != "{":
+                        args = splt_list[2].split(",", 2)
+                        self.do_update(" ".join(
+                            [splt_list[0]] + [a.strip(" \"") for a in args]
+                            ))
+                    else:
+                        arg, args = splt_list[2].strip("}").split("{")
+                        args = args.split(",")
+                        r = [splt_list[0]] + [arg.split(",")[0]]
+                        for a in args:
+                            self.do_update(
+                                " ".join(
+                                    r + [b.strip("\" ") for b in a.split(":")]
+                                    ))
+                else:
+                    print("** Unknown syntax:", line)
+
+    def do_count(self, line):
+        """
+        retrieves the number of instances of class
+        """
+        the_dict = storage.all()
+        cmd, _, _ = self.parseline(line)
+        if cmd is None:
+            print("** class name missing **")
+        count = 0
+        for val in the_dict.values():
+            if cmd == val.__class__.__name__:
+                count += 1
+        print(count)
+
     def do_quit(self, arg):
         """Exit the interpreter"""
         return True
