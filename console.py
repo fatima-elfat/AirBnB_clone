@@ -11,7 +11,9 @@ import shlex
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
     prompt = "(hbnb) "
-    __classes = ["BaseModel"] # list of existing classes
+    __classes = ["BaseModel", "User",
+              "State", "City",
+              "Amenity", "Place", "Review"] # list of existing classes
 
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
