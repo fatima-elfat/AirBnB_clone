@@ -10,7 +10,7 @@ import shlex
 
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     __classes = ["BaseModel"] # list of existing classes
 
     def do_create(self, arg):
@@ -80,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
         objects = storage.all()
         if arg:
             list_args = arg.split()
-            if list_args[0] in HBNBCommand.__class:
+            if list_args[0] in HBNBCommand.__classes:
                 class_objs = [str(v) for k, v in objects.items()
                            if list_args[0] == k.split('.')[0]]
                 print(class_objs)
