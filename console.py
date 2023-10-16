@@ -35,18 +35,16 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def do_create(self, arg):
-        """
-        creates a new instance of BaseModel,
-        saves it (to the JSON file) and prints the id.
-        """
-        cmd, _, _ = self.parseline(arg)
-        if cmd is None:
-            print("** class name missing **")
-        elif cmd not in self.__clss:
-            print("** class doesn't exist **")
+        """Creates a new instance of BaseModel"""
+        if len(arg) > 0:
+            list_arg = arg.split()
+            if arg in HBNBCommand.__classes:
+                print(eval(list_arg[0])().id)
+                storage.save()
+            else:  # class name not in __classes
+                print("** class doesn't exist **")
         else:
-            print(eval(cmd)().id)
-            storage.save()
+            print("** class name missing **")
 
     def help_create(self):
         """
