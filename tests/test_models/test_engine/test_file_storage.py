@@ -144,6 +144,27 @@ class TestFileStorage(unittest.TestCase):
         with self.assertRaises(TypeError):
             models.storage.all(None)
 
+    def test_new_(self):
+        """
+        test the function new without args.
+        """
+        with self.assertRaises(TypeError):
+            models.storage.new(BaseModel(), 1)
+
+    def test_save_(self):
+        """
+        test the function save without args.
+        """
+        with self.assertRaises(TypeError):
+            models.storage.save(None)
+
+    def test_reload_(self):
+        """
+        test the function reload without args.
+        """
+        with self.assertRaises(TypeError):
+            models.storage.reload(None)
+
     def test_init(self):
         """
         test the init.
