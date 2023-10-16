@@ -17,9 +17,13 @@ import models
 
 
 class TestFileStorage(unittest.TestCase):
+    "represent unittest for FileStorage"
 
     @classmethod
     def setUp(self):
+        """
+        set up method.
+        """
         try:
             os.rename("file.json", "test_file.json")
         except IOError:
@@ -27,6 +31,9 @@ class TestFileStorage(unittest.TestCase):
 
     @classmethod
     def tearDown(self):
+        """
+        tear down method.
+        """
         try:
             os.remove("file.json")
         except IOError:
@@ -38,6 +45,9 @@ class TestFileStorage(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
 
     def test_all(self):
+        """
+        test the function all.
+        """
         self.assertIsNotNone(models.storage.all())
         self.assertEqual(dict, type(models.storage.all()))
         self.assertIs(
@@ -46,6 +56,9 @@ class TestFileStorage(unittest.TestCase):
             )
 
     def test_new(self):
+        """
+        test the function new.
+        """
         st = models.storage
         a, b, c = Amenity(),  BaseModel(), City()
         p, r, s = Place(), Review(), State()
@@ -73,6 +86,9 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(u, models.storage.all().values())
 
     def test_save(self):
+        """
+        test the function save.
+        """
         st = models.storage
         a, b, c = Amenity(),  BaseModel(), City()
         p, r, s = Place(), Review(), State()
@@ -96,6 +112,9 @@ class TestFileStorage(unittest.TestCase):
             self.assertIn("User." + u.id, text_)
 
     def test_reload(self):
+        """
+        test the function reload.
+        """
         st = models.storage
         a, b, c = Amenity(),  BaseModel(), City()
         p, r, s = Place(), Review(), State()
@@ -119,10 +138,16 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn("User." + u.id, fs)
 
     def test_all_(self):
+        """
+        test the function all without args.
+        """
         with self.assertRaises(TypeError):
             models.storage.all(None)
 
     def test_init(self):
+        """
+        test the init.
+        """
         self.assertEqual(type(models.storage), FileStorage)
 
 
