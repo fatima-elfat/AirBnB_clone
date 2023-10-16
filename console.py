@@ -203,22 +203,13 @@ class HBNBCommand(cmd.Cmd):
         elif cmd not in self.__classes:
             print("** class doesn't exist **")
             return
-        elif arg == "":
+        elif arg == "" or arg is None:
             print("** instance id missing **")
-            return
-        elif "{}.{}".format(cmd, arg) not in the_dict.keys():
-            print("** no instance found **")
             return
         l_arg = shlex.split(arg)
         """print("{}".format(arg))"""
         b = "{}.{}".format(cmd, l_arg[0])
         a = the_dict.get(b)
-        if cmd is None:
-            print("** class name missing **")
-        elif cmd not in self.__classes:
-            print("** class doesn't exist **")
-        elif arg == "":
-            print("** instance id missing **")
         if a:
             if len(l_arg) < 2:
                 print("** attribute name missing **")
