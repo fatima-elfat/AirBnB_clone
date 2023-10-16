@@ -118,6 +118,13 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn("State." + s.id, fs)
         self.assertIn("User." + u.id, fs)
 
+    def test_all_(self):
+        with self.assertRaises(TypeError):
+            models.storage.all(None)
+
+    def test_init(self):
+        self.assertEqual(type(models.storage), FileStorage)
+
 
 if __name__ == "__main__":
     unittest.main()
