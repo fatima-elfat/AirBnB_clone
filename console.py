@@ -313,6 +313,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, arg):
         """Exit on end-of-file input"""
+        print()
         return True
 
     def help_EOF(self):
