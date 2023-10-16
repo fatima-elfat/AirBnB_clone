@@ -20,6 +20,7 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """HBNB class"""
     prompt = "(hbnb) "
+    file = None
     __classes = [
         "BaseModel", "User",
         "State", "City",
