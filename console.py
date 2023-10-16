@@ -36,6 +36,13 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+    def help_create(self):
+        """
+        Help command for create
+        """
+        print("Create a BaseModel and save json in a file\n")
+
+
     def do_show(self, arg):
         """Prints the string representation of an
         instance by its class name and id
@@ -59,6 +66,16 @@ class HBNBCommand(cmd.Cmd):
                 print("** class name missing **")
         else:
             print("** class name missing **")
+
+    def help_show(self):
+        """
+        Help command
+        """
+
+        msg = "Prints the string representation of an instance "
+        msg += "based on the class name and id\n"
+        print(msg)
+
 
     def do_destroy(self, arg):
         """Deletes an instance from memory
@@ -84,6 +101,13 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name missing **")
 
+    def help_destroy(self):
+        """
+        Help command to destroy
+        """
+        print("Deletes an instance based on the class name and id\n")
+
+
     def do_all(self, arg):
         """
         Prints all string representation of all instances
@@ -103,6 +127,15 @@ class HBNBCommand(cmd.Cmd):
         else:
             allObjs = [str(v) for k, v in objects.items()]
             print(allObjs)
+
+    def help_all(self):
+        """
+        Help command
+        """
+
+        msg = "Prints all string representation of all instances "
+        msg += "based or not on the class name\n"
+        print(msg)
 
     def do_update(self, line):
         """
@@ -136,6 +169,17 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
         else:
             print("** no instance found **")
+
+    def help_update(self):
+        """
+        Help command for updating
+        """
+
+        msg = "Updates an instance based on the class "
+        msg += "name and id by adding or updating attribute\n"
+        msg += "Usage: update <class name> <id> <attribute name>  "
+        msg += "\"<attribute value>\"\n"
+        print(msg)
 
     def default(self, line):
         """
@@ -193,13 +237,33 @@ class HBNBCommand(cmd.Cmd):
                 count += 1
         print(count)
 
+    def help_count(self):
+        """
+        Help command for count
+        """
+
+        msg = "Count the amount of instances in a given class\n"
+        print(msg)
+
     def do_quit(self, arg):
         """Exit the interpreter"""
         return True
 
+    def help_quit(self):
+        """
+        Help command for quitting the program
+        """
+        print("Quit command to exit the program\n")
+
     def do_EOF(self, arg):
         """Exit on end-of-file input"""
         return True
+
+    def help_EOF(self):
+        """
+        Help command for EOF
+        """
+        print("EOF command to exit the program\n")
 
     def emptyline(self):
         """Empty line"""
