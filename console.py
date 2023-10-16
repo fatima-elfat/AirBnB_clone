@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         creates a new instance of BaseModel,
         saves it (to the JSON file) and prints the id.
         """
-        cmd, _, _ = self.parseline(line)
+        cmd, _, _ = self.parseline(arg)
         if cmd is None:
             print("** class name missing **")
         elif cmd not in self.__clss:
