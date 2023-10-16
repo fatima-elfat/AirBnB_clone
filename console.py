@@ -86,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
                             ans = c_l[1] + " " + s_c + " \"" + \
                                 k + "\" \"" + str(v) + "\""
                             return ans
-                        except:
+                        except FileNotFoundError:
                             return line
                     else:
                         return line
@@ -96,7 +96,6 @@ class HBNBCommand(cmd.Cmd):
                 return line
         else:
             return line
-
 
     def do_show(self, arg):
         """Prints the string representation of an
@@ -131,7 +130,6 @@ class HBNBCommand(cmd.Cmd):
         msg += "based on the class name and id\n"
         print(msg)
 
-
     def do_destroy(self, arg):
         """Deletes an instance from memory
           by its class name and id"""
@@ -161,7 +159,6 @@ class HBNBCommand(cmd.Cmd):
         Help command to destroy
         """
         print("Deletes an instance based on the class name and id\n")
-
 
     def do_all(self, arg):
         """
