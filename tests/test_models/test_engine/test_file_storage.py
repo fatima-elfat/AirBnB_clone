@@ -165,6 +165,18 @@ class TestFileStorage(unittest.TestCase):
         with self.assertRaises(TypeError):
             models.storage.reload(None)
 
+    def test_reload_empty(self):
+        """
+        test the function reload empty file.
+        """
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
+        with open("file.json", "w") as f:
+            f.write("{}")
+        self.assertIs(FileStorage().reload(), None)
+
     def test_init(self):
         """
         test the init.
