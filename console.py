@@ -139,7 +139,7 @@ class HBNBCommand(cmd.Cmd):
             list_args = arg.split()
             if list_args[0]:
                 if list_args[0] in HBNBCommand.__classes:
-                    if list_args[1]:
+                    if len(list_args) >= 2:
                         class_id = f"{list_args[0]}.{list_args[1]}"
                         if class_id in objects:
                             del objects[class_id]
