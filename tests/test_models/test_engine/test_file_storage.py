@@ -175,6 +175,9 @@ class TestFileStorage(unittest.TestCase):
             pass
         with open("file.json", "w") as f:
             f.write("{}")
+        with open("file.json", "r") as f:
+            for l in f:
+                self.assertEqual(l, "{}")
         self.assertIs(FileStorage().reload(), None)
 
     def test_init(self):
