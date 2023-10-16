@@ -2,6 +2,7 @@
 
 """Entry point of the command interpreter"""
 
+import json
 import cmd
 from models.base_model import BaseModel
 from models import storage
