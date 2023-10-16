@@ -24,6 +24,14 @@ class HBNBCommand(cmd.Cmd):
         "State", "City",
         "Amenity", "Place", "Review"]  # list of existing classes
 
+    __commands = {
+        "show",
+        "count",
+        "all",
+        "destroy",
+        "update"
+    }
+
     def do_create(self, arg):
         """Creates a new instance of BaseModel"""
         if len(arg) > 0:
@@ -41,6 +49,52 @@ class HBNBCommand(cmd.Cmd):
         Help command for create
         """
         print("Create a BaseModel and save json in a file\n")
+
+    def precmd(self, line):
+        """ Get the line before interpretation"""
+        if len(line):
+            l_c = line.split()
+            if len(l_c):
+                l_last = line.split("{")
+                l_upd = line.split("\"")
+                all_instances = storage.all()
+                ll_cc = l_c[0].split("(")
+                c_l = ll_cc[0].split(".")
+                if len(ll_cc) == 2:
+                    l_arg = ll_cc[1].split("\"")
+                else:
+                    return line
+                if len(c_l) == 2 and c_l[0] in self.__classes\
+                        and c_l[1] in self.__commands:
+                    s_c = c_l[1] + " " + c_l[0]
+                    if ll_cc[1] == ")":
+                        return s_c
+                    elif len(l_arg) == 3 and l_arg[2] == ")":
+                        return s_c + " " + l_arg[1]
+                    elif len(l_upd) == 7 and l_upd[6] == ")":
+                        return s_c + " " + l_arg[1] + " "\
+                            + l_upd[3] + " \"" + l_upd[5] + "\""
+                    elif len(l_last):
+                        try:
+                            dict_up = json.loads(
+                                str("{" + l_last[1][:-1].replace("'", "\"")))
+                            s_c = c_l[0] + " " + l_arg[1]
+                            for k, v in dict_up.items():
+                                self.do_update(
+                                    s_c + " \"" + k + "\" \"" + str(v) + "\"")
+                            ans = c_l[1] + " " + s_c + " \"" + \
+                                k + "\" \"" + str(v) + "\""
+                            return ans
+                        except:
+                            return line
+                    else:
+                        return line
+                else:
+                    return line
+            else:
+                return line
+        else:
+            return line
 
 
     def do_show(self, arg):
