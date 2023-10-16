@@ -51,8 +51,10 @@ class FileStorage():
                 # iterates through key and value of dictionary
                 for key, value in from_json.items():
                     # removes from the dict,the value of __class__
-                    attr_cls_name = value.pop("__class__")
+                    # attr_cls_name = value.pop("__class__")
                     # Recreates the BaseModel object and passes it to new()
-                    self.new(eval(attr_cls_name)(**value))
+                    # self.new(eval(attr_cls_name)(**value))
+                    r = self.clss[value['__class__']](**value)
+                    self.__objects[key] = r
         except FileNotFoundError:
             pass
