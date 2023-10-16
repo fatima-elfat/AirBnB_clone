@@ -197,6 +197,18 @@ class HBNBCommand(cmd.Cmd):
         """
         the_dict = storage.all()
         cmd, arg, _ = self.parseline(line)
+        if cmd is None:
+            print("** class name missing **")
+            return
+        elif cmd not in self.__classes:
+            print("** class doesn't exist **")
+            return
+        elif arg == "":
+            print("** instance id missing **")
+            return
+        elif "{}.{}".format(cmd, arg) not in the_dict.keys():
+            print("** no instance found **")
+            return
         l_arg = shlex.split(arg)
         """print("{}".format(arg))"""
         b = "{}.{}".format(cmd, l_arg[0])
