@@ -1,0 +1,12 @@
+header{
+    background-color: #FFFFFF;
+    border-bottom: 0.063em solid #CCCCCC;
+    height: 4.375em;
+    width:100%;
+}
+header .logo{
+    height: 4.375em;
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+    background-position: 1.25em 50%;
+}
